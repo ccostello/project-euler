@@ -10,9 +10,20 @@
 int 
 fib(int n)
 {
+  static int solutions[30];
+  int solution = 0;
+
   if (n <= 1)
     return (n);
-  return fib(n-1) + fib(n-2);
+  
+  if (n < 30) {
+    if (!solutions[n])
+      solutions[n] = fib(n-1) + fib(n-2);
+
+    return (solutions[n]);
+  }
+  
+  return (fib(n-1) + fib(n-2));
 }
 
 int
