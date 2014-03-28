@@ -11,7 +11,6 @@ int
 fib(int n)
 {
   static int solutions[30];
-  int solution = 0;
 
   if (n <= 1)
     return (n);
