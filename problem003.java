@@ -105,6 +105,12 @@ class Factorer {
 
 public class problem003 {
   public static void main(String[] args) {
+    if (args[0].equals("-a")) {
+      for (Long factor : Factorer.factorsForNumber(Long.parseLong(args[1]))) {
+        System.out.println(factor);
+      }
+      return;
+    }
     System.out.println(Factorer.largestFactorForNumber(Long.parseLong(args[0])));
   }
 }
