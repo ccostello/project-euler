@@ -1,4 +1,4 @@
-import java.lang.Integer;
+import java.lang.Long;
 import java.lang.String;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ import java.util.Collections;
 // ...
 
 class CompositeNumber {
-  private int number;
+  private long number;
   private CompositeNumber left;
   private CompositeNumber right;
   private boolean factored;
 
-  public CompositeNumber(int number) {
+  public CompositeNumber(long number) {
     this.number = number;
   }
 
@@ -34,7 +34,7 @@ class CompositeNumber {
     return right;
   }
 
-  public int getValue() {
+  public long getValue() {
     return number;
   }
 
@@ -50,7 +50,7 @@ class CompositeNumber {
     if (number == 1)
       return;
 
-    for (int i = 2; i < number; i++) {
+    for (long i = 2; i < number; i++) {
       if ((number % i) == 0) {
         this.left = new CompositeNumber(i);
         this.right = new CompositeNumber(number/i);
@@ -63,8 +63,8 @@ class CompositeNumber {
     factored = true;
   }
 
-  public List<Integer> getFactors() {
-    List<Integer> factors = new ArrayList<Integer>();
+  public List<Long> getFactors() {
+    List<Long> factors = new ArrayList<Long>();
     if (getLeft().isPrime()) {
       factors.add(getLeft().getValue());
     } else {
@@ -81,7 +81,7 @@ class CompositeNumber {
   }
 
   // Now here's the implementation-specific bit. We always put the largest of the two factors on the right of the tree.
-  public int largestFactor() {
+  public long largestFactor() {
     if (isPrime()) {
       return getValue();
     }
@@ -90,21 +90,21 @@ class CompositeNumber {
 }
 
 class Factorer {
-  public static List<Integer> factorsForNumber(int number) {
+  public static List<Long> factorsForNumber(long number) {
     CompositeNumber composite = new CompositeNumber(number);
     composite.factor();
     return composite.getFactors();
   }
 
-  public int largestFactorForNumber(int number) {
-    return new CompositeNumber(number).largestFactor();
+  public static long largestFactorForNumber(long number) {
+    CompositeNumber compositeNumber = new CompositeNumber(number);
+    compositeNumber.factor();
+    return compositeNumber.largestFactor();
   }
 }
 
 public class problem003 {
   public static void main(String[] args) {
-    for (Integer i : Factorer.factorsForNumber(Integer.parseInt(args[0]))) {
-      System.out.println(i);
-    }
+    System.out.println(Factorer.largestFactorForNumber(Long.parseLong(args[0])));
   }
 }
