@@ -6,39 +6,16 @@ Number.prototype.mirrorize = function() {
   return this.constructor(this.toString() + this.toString().reverse());
 }
 
-Number.prototype.factor = function() {
-  if (this == 1) {
-    return [1];
-  }
-
-  var minFactor = arguments[0];
-  if (minFactor == undefined)
-    minFactor = 2;
-  
-  if (this < minFactor) {
-    return ['giveup'];
-  }
-
-  var factors = [];
-
-  for (var i = minFactor; i <= this; i++) {
+Number.prototype.threeDigitFactors = function() {
+  for (var i = 999; i >= 100; i--) {
     if ((this % i) == 0) {
-      var prime = i;
-      var remaining = this / i;
-      if (remaining >= minFactor || remaining == 1) {
-        remainingFactors = remaining.factor(minFactor);
-        factors.push(i);
-        for (var j = 0; j < remainingFactors.length; j++) {
-          factors.push(remainingFactors[j]);
-        }
-        break;
+      var quotient = this / i;
+      if (quotient >= 100 && quotient < 1000) {
+        return [i, quotient];
       }
     }
   }
-  if (factors.indexOf('giveup') != -1) {
-    return [];
-  }
-  return factors;
+  return false;
 }
 
 if (!('print' in this)) {
@@ -47,18 +24,10 @@ if (!('print' in this)) {
 
 function main() {
   for (var i = 999; i >= 100; i--) {
-    var factors = i.mirrorize().factor(100);
-    var foundBig = false;
-    for (j in factors) {
-      factor = factors[j];
-      if (factor >= 1000) {
-        foundBig = true;
-        break;
-      }
-    }
-    if (!foundBig) {
+    var factors = i.mirrorize().threeDigitFactors();
+    if (factors) {
       print(factors);
-      break;
+      return;
     }
   }
 }
