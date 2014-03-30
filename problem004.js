@@ -6,22 +6,6 @@ Number.prototype.mirrorize = function() {
   return this.constructor(this.toString() + this.toString().reverse());
 }
 
-Array.prototype.flatten = function() {
-  var flattened = [];
-  for (var i = 0; i < this.length; i++) {
-    obj = this[i];
-    if (obj instanceof Array) {
-      inner = obj.flatten();
-      for (var j = 0; j < inner.length; j++) {
-        flattened.push(inner[j]);
-      }
-    } else {
-      flattened.push(obj);
-    }
-  }
-  return flattened;
-}
-
 Number.prototype.factor = function() {
   if (this == 1) {
     return [1];
@@ -42,16 +26,19 @@ Number.prototype.factor = function() {
       var prime = i;
       var remaining = this / i;
       if (remaining >= minFactor || remaining == 1) {
-        factors.push(i, remaining.factor(minFactor));
+        remainingFactors = remaining.factor(minFactor);
+        factors.push(i);
+        for (var j = 0; j < remainingFactors.length; j++) {
+          factors.push(remainingFactors[j]);
+        }
         break;
       }
     }
   }
-  var flattened = factors.flatten();
-  if (flattened.indexOf('giveup') != -1) {
+  if (factors.indexOf('giveup') != -1) {
     return [];
   }
-  return flattened;
+  return factors;
 }
 
 if (!('print' in this)) {
