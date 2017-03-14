@@ -12,9 +12,9 @@ class problem006 {
 		int diff = 0;
 		for (int i = 1; i <= max; i++) {
 			for (int j = i + 1; j <= max; j++) {
-				diff += 2 * i * j;
+				diff += i * j;
 			}
 		}
-		System.out.println(diff);
+		System.out.println(2 * diff);
 	}
 }
